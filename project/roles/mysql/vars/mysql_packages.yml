@@ -1,0 +1,5 @@
+mysql_packages:  # bu şekilde dictionary yapısıda olmalı.
+  - mysql-server
+  - mysql-client
+  - python3-mysqldb
+  - libmysqlclient-dev

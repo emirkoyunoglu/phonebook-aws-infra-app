@@ -1,0 +1,43 @@
+---
+- name: Check Green target group health
+  include_tasks: check_health.yml
+
+- name: Green sağlıklıysa ALB’yi Green target group’a yönlendir (AWS CLI)
+  command: >
+    aws elbv2 modify-listener
+    --listener-arn {{ alb_listener_arn }}
+    --default-actions Type=forward,TargetGroupArn={{ phonebook_tg_green_arn }}
+  when: green_is_healthy
+  environment:
+    AWS_DEFAULT_REGION: "{{ region }}"
+  notify: slack_success
+
+
+- name: Listener bilgilerini AWS CLI ile al
+  command: >
+    aws elbv2 describe-listeners --listener-arns {{ alb_listener_arn }} --region {{ region }}
+  register: listener_info
+  changed_when: false
+
+- name: Listener'dan şu anki target group ARN’ini al
+  set_fact:
+    current_tg_arn: "{{ (listener_info.stdout | from_json).Listeners[0].DefaultActions[0].TargetGroupArn }}"
+
+
+- name: Green başarısızsa ALB'yi Blue target group'a al (AWS CLI ile)
+  command: >
+    aws elbv2 modify-listener
+    --listener-arn {{ alb_listener_arn }}
+    --default-actions Type=forward,TargetGroupArn={{ phonebook_tg_blue_arn }}
+  when:
+    - not green_is_healthy
+    - current_tg_arn != phonebook_tg_blue_arn
+  environment:
+    AWS_DEFAULT_REGION: "{{ region }}"
+  notify: slack_rollback
+
+# - debug:
+#     msg: "Health check sonucu: {{ green_health_result.stdout }}, green_is_healthy = {{ green_is_healthy }}"
+
+- debug:
+    var: current_tg_arn

@@ -1,0 +1,47 @@
+---
+# tasks file for /home/ubuntu/project/roles/web
+- name: Set hostname
+  become: yes
+  ansible.builtin.shell: "hostnamectl set-hostname {{ hostname }}"
+
+- name: Install Python for app
+  become: yes
+  ansible.builtin.package:
+    name:
+      - python3
+      - python3-pip
+    state: present
+    update_cache: yes
+  notify: Gather facts from db_server 
+
+- name: Copy the app file
+  ansible.builtin.template:
+    src: "{{ template_name }}"
+    dest: /home/ubuntu/phonebook-app.py
+
+- name: Copy requirements.txt
+  ansible.builtin.copy:
+    src: requirements.txt
+    dest: /home/ubuntu/requirements.txt
+
+- name: Copy templates folder
+  ansible.builtin.copy:
+    src: /home/ubuntu/project/phonebook/templates
+    dest: /home/ubuntu/
+
+- name: Install dependencies from requirements file
+  become: yes
+  ansible.builtin.pip:
+    requirements: /home/ubuntu/requirements.txt
+
+# - name: Wait for MySQL to be ready before starting app
+#   wait_for:
+#     host: "{{ mysql_database_host }}"  # veya sabit IP de olabilir
+#     port: 3306
+#     delay: 5
+#     timeout: 60
+
+
+- name: Run the app
+  become: yes
+  ansible.builtin.shell: "nohup python3 phonebook-app.py &"

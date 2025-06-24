@@ -1,0 +1,4 @@
+hostname: cc_green_server
+developer_name: Green
+template_name: phonebook-app-green.j2
+

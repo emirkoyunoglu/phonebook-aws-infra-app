@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📞 Add or Update Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #e2ebf0, #dceffaea);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 80px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .sectionnote {
+      text-align: center;
+      color: #0a4a7a;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      padding: 14px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #0a4a7a;
+      outline: none;
+    }
+
+    button {
+      background-color: #124814;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0e3a10;
+    }
+
+    .warning {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+    }
+
+    .result-note {
+      text-align: center;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="https://www.cloudandcloud.net/wp-content/uploads/2022/06/buyuk-1-160x105.png" alt="Phonebook Icon">
+    </div>
+
+    <h1>Phonebook Application</h1>
+    <h2>Welcome to {{ developer_name }}'s Phonebook App</h2>
+    <p class="sectionnote">Please enter a name to {{ action_name }}</p>
+
+    <form method="POST" action="/">
+      <input type="text" name="username" placeholder="👤 Full Name" required>
+      <input type="tel" name="phonenumber" placeholder="📱 Phone Number" required>
+      <button type="submit">{{ action_name.title() }}</button>
+
+      {% if not_valid %}
+      <p class="warning">{{ message }}</p>
+      {% endif %}
+      {% if show_result %}
+      <p class="result-note">{{ result_html }}</p>
+      {% endif %}
+    </form>
+  </div>
+
+  <footer>
+    <i>This app is developed in Python & Ansible, and runs on AWS ☁️</i>
+  </footer>
+
+</body>
+</html>

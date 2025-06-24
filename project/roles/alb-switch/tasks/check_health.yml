@@ -1,0 +1,49 @@
+- name: Green sunucuda uygulama yayında mı kontrol et (HTTP ping)
+  uri:
+    url: http://{{ green_server_phonebook_ip }}:80
+    return_content: false
+    status_code: 200
+  register: app_response
+  changed_when: false
+  failed_when: false
+
+- name: green_is_healthy true olarak ayarla (HTTP 200 geldiyse)
+  set_fact:
+    green_is_healthy: true
+  when: app_response.status == 200
+
+- name: Aksi halde false olarak ayarla
+  set_fact:
+    green_is_healthy: false
+  when: app_response.status != 200
+
+- name: Green server durumunu yazdır
+  debug:
+    msg: "Green server status is : {{ app_response.status }}"
+
+# - name: Check Green target group health via AWS CLI
+#   command: >
+#     aws elbv2 describe-target-health
+#     --target-group-arn "{{ phonebook_tg_green_arn }}"
+#     --query 'TargetHealthDescriptions[0].TargetHealth.State'
+#     --output text
+#   register: green_health_result
+#   changed_when: false
+#   failed_when: false
+#   retries: 5
+#   delay: 10
+#   until: green_health_result.stdout == "healthy"
+
+# - name: Set green_is_healthy true
+#   set_fact:
+#     green_is_healthy: true
+#   when: green_health_result.stdout == "healthy"
+
+# - name: Set green_is_healthy false
+#   set_fact:
+#     green_is_healthy: false
+#   when: green_health_result.stdout != "healthy"
+
+# - name: Green target group health durumunu yazdır
+#   debug:
+#     msg: "Green target group health: {{ green_health_result.stdout }}"

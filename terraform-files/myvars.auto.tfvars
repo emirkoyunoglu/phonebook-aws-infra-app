@@ -1,0 +1,11 @@
+# aws_access_key = ""
+# aws_secret_key = ""
+mykey = "your-key-name"
+name_tags = ["control_node", "db_server", "blue_server", "green_server"]
+env_tags = ["dev/prod","dev/prod","dev", "prod"]
+web_tags = ["web_server"]
+worker-node-type = "t2.micro"
+control-node-type = "t3a.medium"
+num = 4
+region = "us-east-1" # or your preferred region
+hosted_zone_id = "AAAAAAAAAAAAAAAAAAAA" # Replace with your  hosted zone ID

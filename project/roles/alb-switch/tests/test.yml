@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - /home/ubuntu/project/roles/alb-switch
+  tasks:
+    - name: Green sağlıklıysa ALB’yi Green target group’a yönlendir (AWS CLI)
+      command: >
+        aws elbv2 modify-listener
+        --listener-arn {{ alb_listener_arn }}
+        --default-actions Type=forward,TargetGroupArn={{ phonebook_tg_green_arn }}
+      when: green_is_healthy
+      environment:
+        AWS_DEFAULT_REGION: us-east-1
+      notify: slack_success

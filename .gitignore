@@ -1,0 +1,37 @@
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+
+# Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Editor/IDE files
+.vscode/
+.idea/
+
+# Ansible temporary files
+*.retry
+
+# Sensitive variables (if any)
+# myvars.auto.tfvars # Uncomment if this file contains sensitive data you don't want in git
+
+# Logs and temporary files
+*.log
+*.tmp

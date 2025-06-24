@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📞 Delete from Phonebook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #f2dede, #fbeee6);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 100px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #8e44ad;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .sectionnote {
+      text-align: center;
+      color: #c0392b;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"] {
+      padding: 14px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #c0392b;
+      outline: none;
+    }
+
+    button {
+      background-color: #c0392b;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a93226;
+    }
+
+    .warning {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+    }
+
+    .result-note {
+      text-align: center;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="https://www.cloudandcloud.net/wp-content/uploads/2022/06/buyuk-1-160x105.png" alt="Phonebook Icon">
+    </div>
+
+    <h1>Delete a Contact</h1>
+    <h2>Hello {{ developer_name }}! Let's clean up the list 🗑️</h2>
+    <p class="sectionnote">Enter a name to delete</p>
+
+    <form method="POST" action="/">
+      <input type="text" name="username" placeholder="✏️ Full Name" required>
+      <button type="submit">❌ Delete</button>
+      {% if not_valid %}
+      <p class="warning">{{ message }}</p>
+      {% endif %}
+      {% if show_result %}
+      <p class="result-note">{{ result_html }}</p>
+      {% endif %}
+    </form>
+  </div>
+
+  <footer>
+    <i>This app is developed in Python & Ansible, and runs on AWS ☁️</i>
+  </footer>
+
+</body>
+</html>

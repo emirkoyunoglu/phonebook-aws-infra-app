@@ -1,0 +1,6 @@
+---
+# handlers file for /home/ubuntu/project/roles/web
+- name: Gather facts from db_server
+  ansible.builtin.setup:
+  delegate_to: "{{ item }}"
+  loop: "{{ groups['db_server_phonebook'] }}"

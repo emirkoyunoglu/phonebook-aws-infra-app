@@ -1,0 +1,20 @@
+---
+# handlers file for /home/ubuntu/project/roles/alb-switch
+- name: slack_success
+  community.general.slack:
+    token: "{{ token }}"
+    msg: ":white_check_mark: Green versiyona başarıyla geçildi :rocket:"
+    channel: "{{ slack_channel }}"
+    username: "Ansible"
+  delegate_to: localhost
+  when: slack_enabled | default(true)
+
+
+- name: slack_rollback
+  community.general.slack:
+    token: "{{ slack_token }}"
+    msg: ":warning: Green versiyon başarısız oldu. Rollback ile Blue versiyona dönüldü :arrow_backward:"
+    channel: "{{ slack_channel }}"
+    username: "Ansible"
+  delegate_to: localhost
+  when: slack_enabled | default(true)

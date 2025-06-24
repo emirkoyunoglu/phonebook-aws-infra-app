@@ -1,0 +1,58 @@
+- name: Set hostname
+  ansible.builtin.shell: "hostnamectl set-hostname {{ hostname }}"
+
+- name: Include MySQL package list
+  ansible.builtin.include_vars: vars/mysql_packages.yml
+
+- name: Installing MySQL and dependencies
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ mysql_packages }}" 
+  notify:
+    - Start and enable MySQL service
+
+- name: Create MySQL user
+  community.mysql.mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    priv: "*.*:ALL"
+    host: "%"
+    state: present
+
+- name: Copy the init.sql file
+  ansible.builtin.copy:
+    src: init.sql
+    dest: /home/ubuntu/
+
+- name: Create database
+  community.mysql.mysql_db:
+    name: "{{ db_name }}"
+    state: present
+
+- name: Check if table exists
+  ansible.builtin.shell: |
+    echo "USE {{ db_name }}; SHOW TABLES LIKE '{{ db_table }}';" | mysql
+  register: resultOfShowTable
+  #changed_when: false
+
+- name: Debug output
+  ansible.builtin.debug:
+    var: resultOfShowTable.stdout
+
+- name: Import init.sql if table doesn't exist
+  community.mysql.mysql_db:
+    name: "{{ db_name }}"
+    state: import
+    target: /home/ubuntu/init.sql
+  when: resultOfShowTable.stdout == ""
+
+- name: Enable remote login to MySQL
+  ansible.builtin.lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    backup: yes
+  notify:
+    - Restart mysql

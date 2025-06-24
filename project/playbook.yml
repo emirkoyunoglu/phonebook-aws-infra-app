@@ -1,0 +1,34 @@
+- name: run the db server
+  hosts: db_server_phonebook
+  become: true
+  roles:
+    - common
+    - mysql
+
+- name: run the app on web servers
+  hosts: web_servers
+  become: true
+  roles:
+    - common
+    - web
+
+# - name: run the app on blue server
+#   hosts: blue_server_phonebook
+#   become: true
+#   roles:
+#     - common
+#     - web
+
+# - name: run the app on green server
+#   hosts: green_server_phonebook
+#   become: true
+#   roles:
+#     - common
+#     - web
+
+# - name: Switch ALB to Green and rollback if needed
+#   hosts: localhost
+#   gather_facts: false
+#   roles:
+#     - alb-switch
+

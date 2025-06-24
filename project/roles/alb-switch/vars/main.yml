@@ -1,0 +1,11 @@
+---
+# vars file for /home/ubuntu/project/roles/alb-switch
+slack_enabled: false
+region: ""
+phonebook_tg_green_arn: ""
+phonebook_tg_blue_arn: ""
+subnet_ids: ""
+security_group_id: ""
+alb_listener_arn: ""
+slack_channel: ""
+green_server_phonebook_ip: ""

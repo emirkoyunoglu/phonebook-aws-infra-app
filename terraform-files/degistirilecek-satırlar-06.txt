@@ -1,0 +1,10 @@
+key-pem dosyanızı da bu klasör içine kopyalayın.
+bu ayarlar eu-west-1 (irlanda) regionına göre yapılmıştır. region değiştirmek istiyorsanız, myvars.auto.tfvars dosyasında da region değiştirmeniz gerekmektedir.
+
+> main.tf
+192 - domain nae-me adresinizi giriniz
+
+> myvars.auto.tfvars
+3 - mykey 
+8 - region  (farklı regionda çalışıyorsanız değiştiriniz)
+9 - domaine ait hosted-zone-id giriniz

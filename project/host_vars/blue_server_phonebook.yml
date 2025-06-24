@@ -1,0 +1,3 @@
+hostname: cc_blue_server
+developer_name: Blue
+template_name: phonebook-app-blue.j2

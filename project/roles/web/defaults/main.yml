@@ -1,0 +1,3 @@
+---
+# defaults file for /home/ubuntu/project/roles/web
+template_name: phonebook-default.j2

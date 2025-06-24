@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📞 My Phonebook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #c1dfc4, #deecdd);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 80px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"] {
+      padding: 14px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #16a085;
+      outline: none;
+    }
+
+    button {
+      background-color: #16a085;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #149174;
+    }
+
+    .results {
+      margin-top: 30px;
+    }
+
+    .results h2 {
+      color: #34495e;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .results ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .results li {
+      background-color: #f4f9f4;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .results li span {
+      font-weight: 600;
+    }
+
+    .empty-note {
+      text-align: center;
+      font-size: 16px;
+      color: #999;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="https://www.cloudandcloud.net/wp-content/uploads/2022/06/buyuk-1-160x105.png" alt="Phonebook Icon">
+    </div>
+
+    <h1>My  Phonebook</h1>
+    <p class="subtitle">Hello {{ developer_name }}! Let's find your friends 📇</p>
+
+    <form method="POST" action="/">
+      <input type="text" name="username" placeholder="🔍 Search by name..." required>
+      <button type="submit">🔎 Search</button>
+    </form>
+
+    {% if show_result %}
+    <div class="results">
+      <h2>Results for '{{ keyword }}'</h2>
+      <ul>
+        {% for person in persons_html %}
+        <li>📞 <span>{{ person.name }}</span>: {{ person.number }}</li>
+        {% else %}
+        <p class="empty-note">😕 No one found with that name...</p>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+
+  <footer>
+    <i>This fun little app is made with Python & Ansible, and runs on AWS ☁️</i>
+  </footer>
+
+</body>
+</html>
